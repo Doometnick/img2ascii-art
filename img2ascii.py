@@ -59,7 +59,15 @@ def print_ascii_art(img, width=100):
     ascii_rows = ["".join(ascii_letters[i:i+width]) for i in range(0, len(ascii_letters), width)]
 
     # Print final picture
-    print("\n".join(ascii_rows))
+    ascii_picture = "\n".join(ascii_rows)
+    export_ascii_picture(ascii_picture)
+    print(ascii_picture)
+
+
+def export_ascii_picture(text):
+    open("last_ascii_mapping.txt", "w").writelines("ASCII order used: " + ascii_codes + "\n")
+    open("last_ascii_mapping.txt", "a").writelines(text)
+
 
 
 if __name__ == "__main__":
