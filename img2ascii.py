@@ -1,5 +1,6 @@
 import PIL
 import sys
+import random
 from PIL import Image
 
 """
@@ -17,6 +18,7 @@ Convert images to ascii art.
 
 # 70 levels of gray
 ascii_codes = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
+ascii_codes = "".join(random.sample(ascii_codes, len(ascii_codes)))
 
 
 def resize_img(img, new_width=100):
