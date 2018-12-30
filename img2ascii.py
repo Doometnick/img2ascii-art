@@ -1,5 +1,6 @@
 import PIL
 import sys
+import string
 import random
 from PIL import Image
 
@@ -7,18 +8,9 @@ from PIL import Image
 Convert images to ascii art.
 """
 
-# What we need:
-# - image folder imgs
-# - launch command from cmd
-# - conversion of image to greyscale
-# - resizing of the image to standard width
-# - collection of ascii codes
-# - bucketing of pixels into ascii codes
-
-
-# 70 levels of gray
-ascii_codes = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
-ascii_codes = "".join(random.sample(ascii_codes, len(ascii_codes)))
+# ascii_chars = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
+ascii_chars = "#?%.S+.*:,@"  # lesser chars create a more beautiful picture
+ascii_chars = "".join(random.sample(ascii_chars, random.randint(3, len(ascii_chars))))
 
 
 def resize_img(img, new_width=100):
@@ -42,7 +34,9 @@ def pixels_to_ascii(img):
     Converts pixels to ascii characters.
     """
     img_pixels = list(img.getdata())
-    img_ascii = [ascii_codes[pixel // len(ascii_codes)] for pixel in img_pixels]
+    # Pixel values go from 0-255 and get fitted into the range from
+    # 0 to length of possible ascii characters in variable ascii_chars.
+    img_ascii = [ascii_chars[int(pixel_val / 255 * (len(ascii_chars) - 1))] for pixel_val in img_pixels]
     return img_ascii
 
 
@@ -58,14 +52,14 @@ def print_ascii_art(img, width=100):
     # each string representing a row of the final picture.
     ascii_rows = ["".join(ascii_letters[i:i+width]) for i in range(0, len(ascii_letters), width)]
 
-    # Print final picture
+    # Print final pictures
     ascii_picture = "\n".join(ascii_rows)
     export_ascii_picture(ascii_picture)
     print(ascii_picture)
 
 
 def export_ascii_picture(text):
-    open("last_ascii_mapping.txt", "w").writelines("ASCII order used: " + ascii_codes + "\n")
+    open("last_ascii_mapping.txt", "w").writelines("ASCII order used: " + ascii_chars + "\n")
     open("last_ascii_mapping.txt", "a").writelines(text)
 
 
@@ -73,9 +67,9 @@ def export_ascii_picture(text):
 if __name__ == "__main__":
 
     try:
-        img = sys.argv[1]
+        img, width = sys.argv[1], int(sys.argv[2])
     except Exception as e:
-        print(f"Usage: python img2ascii.py <image_name>")
+        print(f"Usage: python img2ascii.py <image_name> <width>")
         print(e)
         sys.exit()
 
@@ -86,4 +80,4 @@ if __name__ == "__main__":
         print(e)
         sys.exit()
 
-    print_ascii_art(img)
+    print_ascii_art(img, width)
