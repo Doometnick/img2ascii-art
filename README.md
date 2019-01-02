@@ -6,7 +6,7 @@ img2ascii-art is a command-line program that converts an image into text. After 
 ![](http://funkyimg.com/i/2PJpz.jpg)
 
 ## Usage
-The program can be run by `python img2ascii.py <image file name> <text image width>`, for example `python img2ascii.py img1.jpg 100`. Images that are taken as input have to be stored in the folder _imgs_.
+The program can be run by `python img2ascii.py <image file name> <text image width>` on windows or the equivalent on iOS/Linux, for example `python img2ascii.py img1.jpg 100`. Images that are taken as input have to be stored in the folder _imgs_.
 
 ## Output
 Executing the code will do two things:
